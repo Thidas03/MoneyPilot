@@ -203,16 +203,16 @@ const Dashboard = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-8 animate-fade-in">
       {/* Welcome Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-brand-500/30 flex items-center justify-center bg-brand-500/10 text-brand-400 shadow-lg shrink-0">
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-brand-500/25 flex items-center justify-center bg-brand-500/5 text-brand-600 shadow-sm shrink-0">
             <User className="w-8 h-8 md:w-10 md:h-10" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
               Welcome aboard, {user.name}!
             </h1>
-            <p className="text-dark-400 text-sm md:text-base mt-1">
+            <p className="text-dark-455 text-slate-500 text-sm md:text-base mt-1">
               Your flight path looks smooth. Manage your investments and track finances below.
             </p>
           </div>
@@ -224,7 +224,7 @@ const Dashboard = () => {
               setEditingTransaction(null);
               setIsModalOpen(true);
             }}
-            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30 transition-all active:scale-[0.98]"
+            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm shadow-md hover:shadow-brand-500/10 transition-all active:scale-[0.98]"
           >
             <Plus className="w-5 h-5" />
             Add Transaction
@@ -234,16 +234,16 @@ const Dashboard = () => {
 
       {/* Global Notifications Panel */}
       {successMsg && (
-        <div className="bg-emerald-500/10 border border-brand-500/20 rounded-2xl p-4 flex items-start gap-3 text-emerald-200 text-sm animate-slide-up">
-          <CheckCircle2 className="w-5 h-5 text-brand-400 shrink-0 mt-0.5" />
-          <span className="font-semibold text-white">{successMsg}</span>
+        <div className="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 flex items-start gap-3 text-emerald-850 text-sm animate-slide-up">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+          <span className="font-semibold text-emerald-800">{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-3 text-red-200 text-sm animate-slide-up">
-          <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-          <span className="font-semibold text-white">{errorMsg}</span>
+        <div className="bg-red-50/80 border border-red-200 rounded-2xl p-4 flex items-start gap-3 text-red-850 text-sm animate-slide-up">
+          <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <span className="font-semibold text-red-800">{errorMsg}</span>
         </div>
       )}
 
@@ -260,16 +260,16 @@ const Dashboard = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/5 rounded-full blur-2xl group-hover:bg-brand-500/10 transition-all duration-300"></div>
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-dark-400 uppercase tracking-wider">Total Net Worth</p>
-                  <h3 className={`text-3xl font-extrabold mt-2 tracking-tight ${netWorth >= 0 ? 'text-white' : 'text-red-400'}`}>
+                  <p className="text-sm font-medium text-dark-405 text-slate-500 uppercase tracking-wider">Total Net Worth</p>
+                  <h3 className={`text-3xl font-extrabold mt-2 tracking-tight ${netWorth >= 0 ? 'text-slate-900' : 'text-red-600'}`}>
                     {netWorth < 0 ? '-' : ''}Rs. {Math.abs(netWorth).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </h3>
                 </div>
-                <div className="p-3 bg-brand-500/10 text-brand-400 rounded-2xl">
+                <div className="p-3 bg-brand-500/10 text-brand-600 rounded-2xl">
                   <DollarSign className="w-6 h-6" />
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 mt-4 text-xs font-semibold text-brand-400">
+              <div className="flex items-center gap-1.5 mt-4 text-xs font-semibold text-brand-600">
                 <TrendingUp className="w-4 h-4" />
                 <span>Computed from active accounts</span>
               </div>
@@ -280,17 +280,17 @@ const Dashboard = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-2xl group-hover:bg-red-500/10 transition-all duration-300"></div>
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-sm font-medium text-dark-400 uppercase tracking-wider">Monthly Expenses</p>
-                  <h3 className="text-3xl font-extrabold text-white mt-2 tracking-tight">
+                  <p className="text-sm font-medium text-dark-405 text-slate-500 uppercase tracking-wider">Monthly Expenses</p>
+                  <h3 className="text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
                     Rs. {currentMonthExpense.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </h3>
                 </div>
-                <div className="p-3 bg-red-500/10 text-red-400 rounded-2xl">
+                <div className="p-3 bg-red-500/10 text-red-600 rounded-2xl">
                   <ArrowDownRight className="w-6 h-6" />
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 mt-4 text-xs font-semibold text-dark-400">
-                <ArrowDownRight className="w-4 h-4 text-red-400" />
+              <div className="flex items-center gap-1.5 mt-4 text-xs font-semibold text-slate-500">
+                <ArrowDownRight className="w-4 h-4 text-red-600" />
                 <span>Spent during this calendar month</span>
               </div>
             </div>
@@ -299,14 +299,14 @@ const Dashboard = () => {
           {/* Search, Filter controls, and Transaction Log */}
           <div className="glass-panel rounded-3xl p-6 space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <h3 className="text-lg font-bold text-white tracking-tight">Transaction Log</h3>
+              <h3 className="text-lg font-bold text-slate-900 tracking-tight">Transaction Log</h3>
               
               {/* Search & Filter Options Row */}
               <div className="flex flex-wrap items-center gap-3">
                 {/* Search Bar */}
                 <div className="relative max-w-xs w-full sm:w-auto">
                   <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-dark-500">
-                    <Search className="w-4 h-4 text-dark-400" />
+                    <Search className="w-4 h-4 text-slate-400" />
                   </span>
                   <input
                     type="text"
@@ -321,7 +321,7 @@ const Dashboard = () => {
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="px-3 py-2 rounded-xl glass-input text-xs bg-dark-900"
+                  className="px-3 py-2 rounded-xl glass-input text-xs bg-slate-50"
                 >
                   <option value="all">All Types</option>
                   <option value="income">Incomes</option>
@@ -332,7 +332,7 @@ const Dashboard = () => {
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="px-3 py-2 rounded-xl glass-input text-xs bg-dark-900 max-w-[120px]"
+                  className="px-3 py-2 rounded-xl glass-input text-xs bg-slate-50 max-w-[120px]"
                 >
                   <option value="all">All Categories</option>
                   {CATEGORIES.map((cat) => (
@@ -347,18 +347,18 @@ const Dashboard = () => {
             {/* List Body */}
             {loading ? (
               <div className="py-12 flex justify-center items-center">
-                <RefreshCw className="w-8 h-8 text-brand-400 animate-spin" />
+                <RefreshCw className="w-8 h-8 text-brand-600 animate-spin" />
               </div>
             ) : filteredTransactions.length === 0 ? (
               <div className="py-16 text-center">
-                <p className="text-dark-400 text-sm">No transactions match your search filters.</p>
+                <p className="text-slate-500 text-sm">No transactions match your search filters.</p>
                 {transactions.length === 0 && (
                   <button
                     onClick={() => {
                       setEditingTransaction(null);
                       setIsModalOpen(true);
                     }}
-                    className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-500/10 text-brand-400 text-xs font-semibold hover:bg-brand-500/20"
+                    className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-500/10 text-brand-600 text-xs font-semibold hover:bg-brand-500/20"
                   >
                     <Plus className="w-4 h-4" /> Create your first log
                   </button>
@@ -366,32 +366,32 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-white/5">
+                <table className="min-w-full divide-y divide-slate-100">
                   <thead>
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-dark-400 uppercase tracking-wider">Date</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-dark-400 uppercase tracking-wider">Category</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-dark-400 uppercase tracking-wider">Description</th>
-                      <th className="px-4 py-3 text-right text-xs font-semibold text-dark-400 uppercase tracking-wider">Amount</th>
-                      <th className="px-4 py-3 text-center text-xs font-semibold text-dark-400 uppercase tracking-wider">Actions</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Date</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Category</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Description</th>
+                      <th className="px-4 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">Amount</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 text-sm text-dark-200">
+                  <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
                     {filteredTransactions.map((tx) => (
-                      <tr key={tx._id} className="hover:bg-white/[0.02] transition-colors">
-                        <td className="px-4 py-3.5 whitespace-nowrap text-xs text-dark-400">
+                      <tr key={tx._id} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="px-4 py-3.5 whitespace-nowrap text-xs text-slate-500">
                           {formatDate(tx.date)}
                         </td>
                         <td className="px-4 py-3.5 whitespace-nowrap">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/5 text-white border border-white/10">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
                             {tx.category}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 max-w-[200px] truncate font-medium text-white">
-                          {tx.description || <span className="text-dark-500 italic">No description</span>}
+                        <td className="px-4 py-3.5 max-w-[200px] truncate font-medium text-slate-800">
+                          {tx.description || <span className="text-slate-400 italic">No description</span>}
                         </td>
                         <td className={`px-4 py-3.5 whitespace-nowrap text-right font-bold ${
-                          tx.type === 'income' ? 'text-brand-400' : 'text-white'
+                          tx.type === 'income' ? 'text-emerald-600' : 'text-slate-800'
                         }`}>
                           {tx.type === 'income' ? '+' : '-'}Rs. {tx.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                         </td>
@@ -399,14 +399,14 @@ const Dashboard = () => {
                           <div className="flex justify-center items-center gap-2">
                             <button
                               onClick={() => handleEditTrigger(tx)}
-                              className="p-1.5 rounded-lg text-dark-400 hover:text-white hover:bg-white/5 transition-colors focus:outline-none"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors focus:outline-none"
                               title="Edit"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => handleDeleteTrigger(tx._id)}
-                              className="p-1.5 rounded-lg text-dark-400 hover:text-red-400 hover:bg-red-500/10 transition-colors focus:outline-none"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors focus:outline-none"
                               title="Delete"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -426,14 +426,14 @@ const Dashboard = () => {
         {/* Right Sidebar: Profile details */}
         <div className="space-y-6">
           <div className="glass-panel glass-panel-hover rounded-3xl p-6 space-y-6">
-            <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2 pb-3 border-b border-white/5">
-              <User className="w-5 h-5 text-brand-400" />
+            <h3 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2 pb-3 border-b border-slate-100">
+              <User className="w-5 h-5 text-brand-600" />
               Pilot Profile
             </h3>
 
             <div className="space-y-4 text-sm">
               <div className="flex justify-center py-2">
-                <div className="w-24 h-24 rounded-full border-2 border-brand-500/20 flex items-center justify-center bg-brand-500/5 text-brand-400 shadow-inner">
+                <div className="w-24 h-24 rounded-full border border-brand-500/15 flex items-center justify-center bg-brand-505 bg-brand-500/5 text-brand-600 shadow-sm">
                   <User className="w-10 h-10" />
                 </div>
               </div>
@@ -441,25 +441,25 @@ const Dashboard = () => {
               {/* Display fields */}
               <div className="space-y-3">
                 <div>
-                  <span className="text-xs text-dark-400 uppercase tracking-wider block">Pilot ID</span>
-                  <span className="font-mono text-xs text-dark-200 font-semibold">{user._id}</span>
+                  <span className="text-xs text-slate-400 uppercase tracking-wider block">Pilot ID</span>
+                  <span className="font-mono text-xs text-slate-600 font-semibold">{user._id}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-dark-400 uppercase tracking-wider block">Full Name</span>
-                  <span className="text-white font-medium">{user.name}</span>
+                  <span className="text-xs text-slate-400 uppercase tracking-wider block">Full Name</span>
+                  <span className="text-slate-800 font-bold">{user.name}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-dark-400 shrink-0" />
+                  <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                   <div>
-                    <span className="text-xs text-dark-400 uppercase tracking-wider block">Email Address</span>
-                    <span className="text-white font-medium">{user.email}</span>
+                    <span className="text-xs text-slate-400 uppercase tracking-wider block">Email Address</span>
+                    <span className="text-slate-800 font-semibold">{user.email}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Calendar className="w-4 h-4 text-dark-400 shrink-0" />
+                  <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
                   <div>
-                    <span className="text-xs text-dark-400 uppercase tracking-wider block">Registered At</span>
-                    <span className="text-white font-medium">{formatDate(user.createdAt)}</span>
+                    <span className="text-xs text-slate-400 uppercase tracking-wider block">Registered At</span>
+                    <span className="text-slate-800 font-semibold">{formatDate(user.createdAt)}</span>
                   </div>
                 </div>
               </div>

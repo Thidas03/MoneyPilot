@@ -71,15 +71,15 @@ const Login = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       {/* Background glow ornaments */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
       
       <div className="max-w-md w-full space-y-8 glass-panel glass-panel-hover rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden animate-slide-up">
         {/* Top brand header */}
         <div className="text-center relative">
-          <div className="mx-auto flex items-center justify-center w-12 h-12 bg-brand-500/10 text-brand-400 rounded-2xl mb-4">
-            <Compass className="w-7 h-7" />
+          <div className="mx-auto flex items-center justify-center w-12 h-12 bg-brand-500/10 text-brand-600 rounded-2xl mb-4">
+            <Compass className="w-7 h-7 animate-spin-slow" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Welcome back</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Welcome back</h2>
           <p className="mt-2 text-sm text-dark-400">
             Log in to manage your flight path to financial freedom
           </p>
@@ -87,8 +87,8 @@ const Login = () => {
 
         {/* Global/Context Error Banner */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4 flex items-start gap-3 text-red-200 text-sm animate-fade-in">
-            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+          <div className="bg-red-50/80 border border-red-200 rounded-2xl p-4 flex items-start gap-3 text-red-800 text-sm animate-fade-in">
+            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <span className="font-semibold">Authentication failed: </span>
               {error}
@@ -114,14 +114,14 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-4 py-3 rounded-xl glass-input text-sm ${
-                    formErrors.email ? 'border-red-500/50 focus:border-red-500 focus:box-shadow-red' : ''
+                    formErrors.email ? 'border-red-350 focus:border-red-500 focus:box-shadow-red' : ''
                   }`}
                   placeholder="name@example.com"
                 />
               </div>
               {formErrors.email && (
-                <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1.5">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.email}
                 </p>
               )}
@@ -143,21 +143,21 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-11 py-3 rounded-xl glass-input text-sm ${
-                    formErrors.password ? 'border-red-500/50 focus:border-red-500 focus:box-shadow-red' : ''
+                    formErrors.password ? 'border-red-350 focus:border-red-500 focus:box-shadow-red' : ''
                   }`}
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-dark-400 hover:text-white transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-dark-400 hover:text-slate-800 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
               {formErrors.password && (
-                <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1.5">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.password}
                 </p>
               )}
@@ -168,7 +168,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group relative w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-lg shadow-brand-500/20 active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-brand-500 hover:bg-brand-600 focus:outline-none transition-all shadow-lg shadow-brand-500/20 active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
@@ -185,7 +185,7 @@ const Login = () => {
         <div className="text-center mt-6">
           <p className="text-sm text-dark-400">
             Don't have an account?{' '}
-            <Link to="/register" className="font-semibold text-brand-400 hover:text-brand-300 transition-colors">
+            <Link to="/register" className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
               Create an account
             </Link>
           </p>

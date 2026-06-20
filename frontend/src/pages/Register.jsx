@@ -85,15 +85,15 @@ const Register = () => {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       {/* Background glow ornaments */}
-      <div className="absolute bottom-1/4 right-1/2 translate-x-1/2 translate-y-1/2 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute bottom-1/4 right-1/2 translate-x-1/2 translate-y-1/2 w-80 h-80 bg-brand-500/5 rounded-full blur-3xl -z-10"></div>
 
       <div className="max-w-md w-full space-y-8 glass-panel glass-panel-hover rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden animate-slide-up">
         {/* Top brand header */}
         <div className="text-center relative">
-          <div className="mx-auto flex items-center justify-center w-12 h-12 bg-brand-500/10 text-brand-400 rounded-2xl mb-4">
-            <Compass className="w-7 h-7" />
+          <div className="mx-auto flex items-center justify-center w-12 h-12 bg-brand-500/10 text-brand-600 rounded-2xl mb-4">
+            <Compass className="w-7 h-7 animate-spin-slow" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Create Account</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Create Account</h2>
           <p className="mt-2 text-sm text-dark-400">
             Set up your profile to start your journey with MoneyPilot
           </p>
@@ -101,8 +101,8 @@ const Register = () => {
 
         {/* Global/Context Error Banner */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4 flex items-start gap-3 text-red-200 text-sm animate-fade-in">
-            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+          <div className="bg-red-50/80 border border-red-200 rounded-2xl p-4 flex items-start gap-3 text-red-800 text-sm animate-fade-in">
+            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <span className="font-semibold">Registration failed: </span>
               {error}
@@ -128,14 +128,14 @@ const Register = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-4 py-2.5 rounded-xl glass-input text-sm ${
-                    formErrors.name ? 'border-red-500/50 focus:border-red-500' : ''
+                    formErrors.name ? 'border-red-350 focus:border-red-500' : ''
                   }`}
                   placeholder="John Doe"
                 />
               </div>
               {formErrors.name && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.name}
                 </p>
               )}
@@ -157,20 +157,18 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-4 py-2.5 rounded-xl glass-input text-sm ${
-                    formErrors.email ? 'border-red-500/50 focus:border-red-500' : ''
+                    formErrors.email ? 'border-red-350 focus:border-red-500' : ''
                   }`}
                   placeholder="name@example.com"
                 />
               </div>
               {formErrors.email && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.email}
                 </p>
               )}
             </div>
-
-
 
             {/* Password */}
             <div>
@@ -188,21 +186,21 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-11 py-2.5 rounded-xl glass-input text-sm ${
-                    formErrors.password ? 'border-red-500/50 focus:border-red-500' : ''
+                    formErrors.password ? 'border-red-350 focus:border-red-500' : ''
                   }`}
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-dark-400 hover:text-white"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-dark-400 hover:text-slate-800"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
               {formErrors.password && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.password}
                 </p>
               )}
@@ -224,14 +222,14 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={`block w-full pl-11 pr-4 py-2.5 rounded-xl glass-input text-sm ${
-                    formErrors.confirmPassword ? 'border-red-500/50 focus:border-red-500' : ''
+                    formErrors.confirmPassword ? 'border-red-350 focus:border-red-500' : ''
                   }`}
                   placeholder="••••••••"
                 />
               </div>
               {formErrors.confirmPassword && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
+                <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                   {formErrors.confirmPassword}
                 </p>
               )}
@@ -259,7 +257,7 @@ const Register = () => {
         <div className="text-center mt-4">
           <p className="text-sm text-dark-400">
             Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-brand-400 hover:text-brand-300 transition-colors">
+            <Link to="/login" className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
               Log in
             </Link>
           </p>
