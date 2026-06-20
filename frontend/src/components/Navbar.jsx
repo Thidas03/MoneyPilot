@@ -74,9 +74,17 @@ const Navbar = () => {
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-4">
             {user && (
-              <Link to="/dashboard" className={navLinkClass('/dashboard')}>
-                Dashboard
-              </Link>
+              <>
+                <Link to="/dashboard" className={navLinkClass('/dashboard')}>
+                  Dashboard
+                </Link>
+                <Link to="/budgets" className={navLinkClass('/budgets')}>
+                  Budgets
+                </Link>
+                <Link to="/goals" className={navLinkClass('/goals')}>
+                  Goals
+                </Link>
+              </>
             )}
           </div>
 
@@ -178,6 +186,12 @@ const Navbar = () => {
               <>
                 <Link to="/dashboard" onClick={() => setIsOpen(false)} className={mobileNavLinkClass('/dashboard')}>
                   Dashboard
+                </Link>
+                <Link to="/budgets" onClick={() => setIsOpen(false)} className={mobileNavLinkClass('/budgets')}>
+                  Budgets
+                </Link>
+                <Link to="/goals" onClick={() => setIsOpen(false)} className={mobileNavLinkClass('/goals')}>
+                  Goals
                 </Link>
                 <div className={`px-4 py-3 border-t mt-2 flex items-center gap-3 ${
                   isLightPage ? 'border-slate-50' : 'border-white/5'

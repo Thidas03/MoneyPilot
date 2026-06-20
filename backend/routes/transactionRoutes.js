@@ -6,6 +6,7 @@ const {
   createTransaction,
   updateTransaction,
   deleteTransaction,
+  getTransactionStats,
 } = require('../controllers/transactionController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -13,6 +14,8 @@ const router = express.Router();
 
 // Apply auth protection middleware to all transaction routes
 router.use(protect);
+
+router.get('/stats', getTransactionStats);
 
 // Validation rules
 const transactionValidation = [

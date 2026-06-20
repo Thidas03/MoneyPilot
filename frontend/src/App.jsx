@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Budgets from './pages/Budgets';
+import Goals from './pages/Goals';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -29,6 +31,26 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              
+              {/* Protected Budgets Route */}
+              <Route
+                path="/budgets"
+                element={
+                  <ProtectedRoute>
+                    <Budgets />
+                  </ProtectedRoute>
+                }
+              />
+              
+              {/* Protected Goals Route */}
+              <Route
+                path="/goals"
+                element={
+                  <ProtectedRoute>
+                    <Goals />
                   </ProtectedRoute>
                 }
               />

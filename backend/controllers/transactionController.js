@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const Transaction = require('../models/Transaction');
 
@@ -165,10 +166,116 @@ const deleteTransaction = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Get transaction aggregations/statistics
+ * @route   GET /api/transactions/stats
+ * @access  Private
+ */
+const getTransactionStats = async (req, res, next) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+
+    // 1. Core aggregates (Total Income, Total Expense)
+    const summaryPromise = Transaction.aggregate([
+      { $match: { userId } },
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: { $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0] },
+          },
+          totalExpenses: {
+            $sum: { $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0] },
+          },
+        },
+      },
+    ]);
+
+    // 2. Category spending breakdown (Expenses only, sorted desc)
+    const categorySpendingPromise = Transaction.aggregate([
+      { $match: { userId, type: 'expense' } },
+      {
+        $group: {
+          _id: '$category',
+          amount: { $sum: '$amount' },
+        },
+      },
+      { $project: { category: '$_id', amount: 1, _id: 0 } },
+      { $sort: { amount: -1 } },
+    ]);
+
+    // 3. Monthly Trend (Income vs Expense grouped by month)
+    const monthlyTrendPromise = Transaction.aggregate([
+      { $match: { userId } },
+      {
+        $group: {
+          _id: {
+            year: { $year: '$date' },
+            month: { $month: '$date' },
+          },
+          income: {
+            $sum: { $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0] },
+          },
+          expense: {
+            $sum: { $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0] },
+          },
+        },
+      },
+      { $sort: { '_id.year': 1, '_id.month': 1 } },
+    ]);
+
+    // 4. Fetch recent transactions (limit 5)
+    const recentTransactionsPromise = Transaction.find({ userId })
+      .sort({ date: -1 })
+      .limit(5);
+
+    // Run aggregations in parallel
+    const [summary, categorySpending, monthlyTrend, recentTransactions] = await Promise.all([
+      summaryPromise,
+      categorySpendingPromise,
+      monthlyTrendPromise,
+      recentTransactionsPromise,
+    ]);
+
+    const totalIncome = summary.length > 0 ? summary[0].totalIncome : 0;
+    const totalExpenses = summary.length > 0 ? summary[0].totalExpenses : 0;
+    const totalSavings = totalIncome - totalExpenses;
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const formattedTrend = monthlyTrend.map((item) => {
+      const monthIdx = item._id.month - 1;
+      const yearShort = item._id.year.toString().slice(-2);
+      return {
+        name: `${monthNames[monthIdx]} '${yearShort}`,
+        income: item.income,
+        expense: item.expense,
+        savings: item.income - item.expense,
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        summary: {
+          totalIncome,
+          totalExpenses,
+          totalSavings,
+        },
+        categorySpending,
+        monthlyTrend: formattedTrend,
+        recentTransactions,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getTransactions,
   getTransactionById,
   createTransaction,
   updateTransaction,
   deleteTransaction,
+  getTransactionStats,
 };

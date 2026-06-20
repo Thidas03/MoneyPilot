@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
+const budgetRoutes = require('./routes/budgetRoutes');
+const goalRoutes = require('./routes/goalRoutes');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Initialize database connection
@@ -32,6 +34,8 @@ app.get('/', (req, res) => {
 // Route mountings
 app.use('/api/auth', authRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/budgets', budgetRoutes);
+app.use('/api/goals', goalRoutes);
 
 // Error handling middleware
 app.use(notFound);
