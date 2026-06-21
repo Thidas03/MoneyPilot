@@ -7,6 +7,8 @@ const authRoutes = require('./routes/authRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 const budgetRoutes = require('./routes/budgetRoutes');
 const goalRoutes = require('./routes/goalRoutes');
+const healthRoutes = require('./routes/healthRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Initialize database connection
@@ -36,6 +38,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/goals', goalRoutes);
+app.use('/api/health-score', healthRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Error handling middleware
 app.use(notFound);

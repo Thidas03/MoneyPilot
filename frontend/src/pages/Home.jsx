@@ -20,10 +20,10 @@ const Home = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f0f9ff]/80 via-[#f8fafc]/90 to-white text-slate-800 font-sans relative overflow-hidden pb-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#f0f9ff]/80 via-[#f8fafc]/90 to-white dark:from-dark-900/40 dark:via-dark-900/70 dark:to-dark-950 text-slate-800 dark:text-slate-100 font-sans relative overflow-hidden pb-12">
       {/* Background Soft Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-100/30 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute top-[40%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 rounded-full blur-[150px] -z-10"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-100/30 dark:bg-emerald-950/20 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute top-[40%] right-[-10%] w-[60%] h-[60%] bg-sky-100/30 dark:bg-sky-950/20 rounded-full blur-[150px] -z-10"></div>
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-16 pb-16 z-10 w-full space-y-16">
@@ -73,15 +73,15 @@ const Home = () => {
 
           {/* Hero Right: Simplified Cockpit Preview Panel */}
           <div className="lg:col-span-5 flex justify-center animate-slide-up duration-500">
-            <div className="relative w-full max-w-sm bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-6 space-y-6 hover:shadow-emerald-500/5 hover:border-emerald-500/10 transition-all duration-300">
+            <div className="relative w-full max-w-sm bg-white dark:bg-slate-50 rounded-[2rem] shadow-2xl border border-slate-100 p-6 space-y-6 hover:shadow-emerald-500/5 hover:border-emerald-500/10 transition-all duration-300">
               
               {/* Inner Head */}
-              <div className="flex justify-between items-center pb-2 border-b border-slate-50">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
                   <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Account Cockpit</span>
                 </div>
-                <div className="p-1 bg-slate-50 rounded-full">
+                <div className="p-1 bg-slate-50 dark:bg-slate-100 rounded-full">
                   <Bell className="w-3.5 h-3.5 text-slate-400" />
                 </div>
               </div>
@@ -110,7 +110,7 @@ const Home = () => {
               </div>
 
               {/* Spending by Category Card */}
-              <div className="bg-slate-50/50 border border-slate-100/50 rounded-2xl p-4 space-y-3">
+              <div className="bg-slate-50/50 dark:bg-slate-100/40 border border-slate-100/50 rounded-2xl p-4 space-y-3">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Spending by Category</span>
                 <div className="flex items-center gap-6">
                   {/* Doughnut SVG */}
@@ -144,7 +144,7 @@ const Home = () => {
               </div>
 
               {/* Trend Chart Card */}
-              <div className="bg-slate-50/50 border border-slate-100/50 rounded-2xl p-4 space-y-2">
+              <div className="bg-slate-50/50 dark:bg-slate-100/40 border border-slate-100/50 rounded-2xl p-4 space-y-2">
                 <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">Trend</span>
                 
                 {/* SVG Line/Area Graph */}
@@ -194,7 +194,7 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
               {/* Card 1 */}
-              <div className="bg-white text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
+              <div className="bg-white dark:bg-slate-50 text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
                 {/* Floating paper plane */}
                 <img 
                   src={heroImg} 
@@ -202,7 +202,7 @@ const Home = () => {
                   className="absolute top-4 right-4 h-6 w-auto opacity-10 group-hover:opacity-20 transition-opacity object-contain"
                 />
                 <div className="space-y-3">
-                  <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl w-fit">
+                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 rounded-2xl w-fit">
                     <CreditCard className="w-5 h-5" />
                   </div>
                   <h3 className="text-base font-bold text-slate-900 font-display">Seamless Tracking</h3>
@@ -213,14 +213,14 @@ const Home = () => {
               </div>
 
               {/* Card 2 */}
-              <div className="bg-white text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
+              <div className="bg-white dark:bg-slate-50 text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
                 <img 
                   src={heroImg} 
                   alt="airplane decoration" 
                   className="absolute top-4 right-4 h-6 w-auto opacity-10 group-hover:opacity-20 transition-opacity object-contain"
                 />
                 <div className="space-y-3">
-                  <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl w-fit">
+                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 rounded-2xl w-fit">
                     <Sliders className="w-5 h-5" />
                   </div>
                   <h3 className="text-base font-bold text-slate-900 font-display">Precision Budgeting</h3>
@@ -231,14 +231,14 @@ const Home = () => {
               </div>
 
               {/* Card 3 */}
-              <div className="bg-white text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
+              <div className="bg-white dark:bg-slate-50 text-slate-800 rounded-3xl p-6 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-48 relative group">
                 <img 
                   src={heroImg} 
                   alt="airplane decoration" 
                   className="absolute top-4 right-4 h-6 w-auto opacity-10 group-hover:opacity-20 transition-opacity object-contain"
                 />
                 <div className="space-y-3">
-                  <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl w-fit">
+                  <div className="p-3 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 rounded-2xl w-fit">
                     <BarChart3 className="w-5 h-5" />
                   </div>
                   <h3 className="text-base font-bold text-slate-900 font-display">Smart Reports</h3>
@@ -258,7 +258,7 @@ const Home = () => {
           {/* Quote & Partners (Left) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3.5 py-1.5 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 px-3.5 py-1.5 rounded-full">
                 Trusted by Thousands
               </span>
               <blockquote className="text-lg md:text-xl font-medium text-slate-700 italic border-l-4 border-slate-200 pl-4 py-1 leading-relaxed">
@@ -292,7 +292,7 @@ const Home = () => {
 
           {/* Gold Coins Stack Graphic (Right) */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative group max-w-sm w-full bg-white rounded-3xl p-4 border border-slate-100 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="relative group max-w-sm w-full bg-white dark:bg-slate-50 rounded-3xl p-4 border border-slate-100 shadow-lg hover:shadow-xl transition-all duration-300">
               <img 
                 src={goldCoins} 
                 alt="Stacked Gold Coins" 
@@ -351,19 +351,19 @@ const Home = () => {
 
           {/* Right Social Icons */}
           <div className="flex items-center gap-4 text-slate-400">
-            <a href="#" className="p-2 bg-white rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
+            <a href="#" className="p-2 bg-white dark:bg-slate-100 rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
               </svg>
             </a>
-            <a href="#" className="p-2 bg-white rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
+            <a href="#" className="p-2 bg-white dark:bg-slate-100 rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                 <rect x="2" y="9" width="4" height="12" />
                 <circle cx="4" cy="4" r="2" />
               </svg>
             </a>
-            <a href="#" className="p-2 bg-white rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
+            <a href="#" className="p-2 bg-white dark:bg-slate-100 rounded-full border border-slate-100 hover:text-slate-600 hover:border-slate-200 transition-colors shadow-sm">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
               </svg>

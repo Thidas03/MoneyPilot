@@ -32,7 +32,9 @@ import {
   AlertCircle,
   CheckCircle2,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  Target,
+  Activity
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -67,9 +69,11 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [stats, setStats] = useState(null);
+  const [healthScore, setHealthScore] = useState(null);
   
   const [loading, setLoading] = useState(true);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [healthLoading, setHealthLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -108,16 +112,32 @@ const Dashboard = () => {
     }
   };
 
+  // Load financial health score from health API
+  const fetchHealthScore = async () => {
+    try {
+      const res = await api.get('/health-score');
+      if (res.data && res.data.success) {
+        setHealthScore(res.data.data);
+      }
+    } catch (err) {
+      console.error('Error fetching health score:', err);
+    } finally {
+      setHealthLoading(false);
+    }
+  };
+
   const loadAllData = async () => {
     setLoading(true);
     setStatsLoading(true);
+    setHealthLoading(true);
     try {
-      await Promise.all([fetchTransactions(), fetchStats()]);
+      await Promise.all([fetchTransactions(), fetchStats(), fetchHealthScore()]);
     } catch (err) {
       console.error('Error loading dashboard data:', err);
     } finally {
       setLoading(false);
       setStatsLoading(false);
+      setHealthLoading(false);
     }
   };
 
@@ -135,14 +155,14 @@ const Dashboard = () => {
         // Edit flow
         const res = await api.put(`/transactions/${editingTransaction._id}`, formData);
         if (res.data && res.data.success) {
-          await Promise.all([fetchTransactions(), fetchStats()]);
+          await Promise.all([fetchTransactions(), fetchStats(), fetchHealthScore()]);
           setSuccessMsg('Transaction updated successfully!');
         }
       } else {
         // Add flow
         const res = await api.post('/transactions', formData);
         if (res.data && res.data.success) {
-          await Promise.all([fetchTransactions(), fetchStats()]);
+          await Promise.all([fetchTransactions(), fetchStats(), fetchHealthScore()]);
           setSuccessMsg('Transaction added successfully!');
         }
       }
@@ -172,7 +192,7 @@ const Dashboard = () => {
     try {
       const res = await api.delete(`/transactions/${id}`);
       if (res.data && res.data.success) {
-        await Promise.all([fetchTransactions(), fetchStats()]);
+        await Promise.all([fetchTransactions(), fetchStats(), fetchHealthScore()]);
         setSuccessMsg('Transaction deleted successfully!');
       }
     } catch (err) {
@@ -488,18 +508,18 @@ const Dashboard = () => {
       </div>
 
       {/* Row 3: Income vs Expense comparison (Bar) + Recent Transactions + Pilot Profile */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         
         {/* Income vs Expense Total Bar Chart */}
-        <div className="glass-panel rounded-3xl p-6 flex flex-col justify-between">
+        <div className="glass-panel rounded-3xl p-6">
           <div>
             <h3 className="text-lg font-bold text-slate-900 tracking-tight">Income vs Expense</h3>
             <p className="text-xs text-slate-400 mt-1">Comparison of overall totals</p>
           </div>
           
-          <div className="h-64 mt-6">
+          <div className="h-48 mt-4">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={comparisonData} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
+              <BarChart data={comparisonData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
@@ -516,13 +536,13 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Transactions List */}
-        <div className="glass-panel rounded-3xl p-6 flex flex-col justify-between">
+        <div className="glass-panel rounded-3xl p-6">
           <div>
             <h3 className="text-lg font-bold text-slate-900 tracking-tight">Recent Activity</h3>
             <p className="text-xs text-slate-400 mt-1">Last 5 logs in your account</p>
           </div>
 
-          <div className="mt-6 flex-grow flex flex-col justify-center">
+          <div className="mt-4">
             {!stats || !stats.recentTransactions || stats.recentTransactions.length === 0 ? (
               <p className="text-slate-400 text-sm text-center py-6">No recent transactions.</p>
             ) : (
@@ -547,47 +567,141 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Pilot Profile info */}
-        <div className="glass-panel rounded-3xl p-6 space-y-6 flex flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2 pb-3 border-b border-slate-100">
-              <User className="w-5 h-5 text-brand-600" />
-              Pilot Profile
+        {/* Financial Health Score Widget */}
+        <div className="glass-panel rounded-3xl p-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/5 rounded-full blur-2xl group-hover:bg-brand-500/10 transition-all duration-300"></div>
+          
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+            <h3 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              <Activity className="w-5 h-5 text-brand-600 animate-pulse" />
+              Financial Health
             </h3>
+            {healthScore && (
+              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${
+                healthScore.status === 'Excellent'
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                  : healthScore.status === 'Good'
+                  ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                  : healthScore.status === 'Fair'
+                  ? 'bg-amber-50 text-amber-700 border-amber-200'
+                  : 'bg-rose-50 text-rose-700 border-rose-200'
+              }`}>
+                {healthScore.status}
+              </span>
+            )}
+          </div>
 
-            <div className="space-y-4 text-sm mt-4">
-              <div className="flex justify-center py-1">
-                <div className="w-16 h-16 rounded-full border border-brand-500/15 flex items-center justify-center bg-brand-500/5 text-brand-600 shadow-sm">
-                  <User className="w-8 h-8" />
+          {healthLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <RefreshCw className="w-6 h-6 text-brand-500 animate-spin" />
+            </div>
+          ) : healthScore ? (
+            <div className="space-y-6 mt-4">
+              {/* Gauge and Message */}
+              <div className="flex items-center gap-5">
+                <div className="relative w-20 h-20 flex items-center justify-center shrink-0">
+                  <svg className="w-full h-full transform -rotate-90">
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="32"
+                      className="stroke-slate-100"
+                      strokeWidth="5.5"
+                      fill="transparent"
+                    />
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="32"
+                      className={`${
+                        healthScore.status === 'Excellent'
+                          ? 'stroke-emerald-500'
+                          : healthScore.status === 'Good'
+                          ? 'stroke-indigo-500'
+                          : healthScore.status === 'Fair'
+                          ? 'stroke-amber-500'
+                          : 'stroke-rose-500'
+                      } transition-all duration-1000 ease-out`}
+                      strokeWidth="5.5"
+                      fill="transparent"
+                      strokeDasharray={201}
+                      strokeDashoffset={201 - (healthScore.score / 100) * 201}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute flex flex-col items-center justify-center">
+                    <span className="text-xl font-extrabold text-slate-800">{healthScore.score}</span>
+                    <span className="text-[8px] text-slate-400 font-bold uppercase tracking-wider">Score</span>
+                  </div>
+                </div>
+
+                <div className="text-xs text-slate-500 leading-relaxed font-medium">
+                  {healthScore.status === 'Excellent' && "Outstanding money management! You're saving well, adhering to budgets, and smashing goals."}
+                  {healthScore.status === 'Good' && "Great work! You have solid control over your finances, with just minor room for tuning budgets or goals."}
+                  {healthScore.status === 'Fair' && "Fair health. Consider lowering monthly expenditures or setting up small goals to build active momentum."}
+                  {healthScore.status === 'Poor' && "Watch out! Your financial health is under pressure. Try to increase savings and curb category budget overruns."}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">Pilot ID</span>
-                  <span className="font-mono text-xs text-slate-500">{user._id}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">Full Name</span>
-                  <span className="text-slate-850 font-bold text-slate-800">{user.name}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">Email</span>
-                    <span className="text-slate-700 font-semibold text-xs">{user.email}</span>
+              {/* Metric breakdown */}
+              <div className="space-y-3.5 pt-2 border-t border-slate-50">
+                {/* Savings Rate */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-500 flex items-center gap-1.5 font-semibold">
+                      <DollarSign className="w-3.5 h-3.5 text-slate-400" />
+                      Savings Rate (40%)
+                    </span>
+                    <span className="text-slate-700 font-bold">{healthScore.breakdown.savingsRate.score}%</span>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-emerald-500 h-1.5 rounded-full transition-all duration-500"
+                      style={{ width: `${healthScore.breakdown.savingsRate.score}%` }}
+                    ></div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider block">Registered At</span>
-                    <span className="text-slate-700 font-semibold text-xs">{formatDate(user.createdAt)}</span>
+
+                {/* Budget Adherence */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-500 flex items-center gap-1.5 font-semibold">
+                      <TrendingDown className="w-3.5 h-3.5 text-slate-400" />
+                      Budget Adherence (30%)
+                    </span>
+                    <span className="text-slate-700 font-bold">{healthScore.breakdown.budgetAdherence.score}%</span>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-indigo-500 h-1.5 rounded-full transition-all duration-500"
+                      style={{ width: `${healthScore.breakdown.budgetAdherence.score}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Goal Progress */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-500 flex items-center gap-1.5 font-semibold">
+                      <Target className="w-3.5 h-3.5 text-slate-400" />
+                      Goal Progress (30%)
+                    </span>
+                    <span className="text-slate-700 font-bold">{healthScore.breakdown.goalProgress.score}%</span>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-purple-500 h-1.5 rounded-full transition-all duration-500"
+                      style={{ width: `${healthScore.breakdown.goalProgress.score}%` }}
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-xs text-slate-400 py-6 text-center">
+              No health metrics data.
+            </div>
+          )}
         </div>
         
       </div>

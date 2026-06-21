@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-50: #eefcf4;
   --color-brand-100: #d7f7e4;
@@ -105,4 +107,79 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(16, 185, 129, 0.35);
+}
+
+/* Dark Mode Color Variable Remappings */
+.dark {
+  --color-slate-50: #0f172a;
+  --color-slate-100: #1e293b;
+  --color-slate-200: #334155;
+  --color-slate-300: #475569;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #cbd5e1;
+  --color-slate-600: #cbd5e1;
+  --color-slate-750: #e2e8f0;
+  --color-slate-700: #e2e8f0;
+  --color-slate-800: #f1f5f9;
+  --color-slate-900: #ffffff;
+
+  --color-dark-50: #ffffff;
+  --color-dark-100: #f8fafc;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-850: #151d30;
+  --color-dark-900: #0b0f19;
+  --color-dark-950: #030712;
+}
+
+.dark body {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 75%) !important;
+}
+
+/* Glass Panels & Custom Controls Dark Mode Overrides */
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .glass-panel-hover:hover {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.25) !important;
+}
+
+.dark .glass-input {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(51, 65, 85, 1) !important;
+  color: #f8fafc !important;
+}
+
+.dark .glass-input::placeholder {
+  color: #64748b !important;
+}
+
+.dark .glass-input:focus {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.25) !important;
+}
+
+.dark .bg-white\/95 {
+  background-color: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
 }
