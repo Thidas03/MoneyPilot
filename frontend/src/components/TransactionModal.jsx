@@ -13,7 +13,7 @@ const CATEGORIES = [
   'Shopping',
   'Health/Medical',
   'Education',
-  'Misc'
+  'Music'
 ];
 
 const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => {
@@ -26,10 +26,13 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
   });
 
   const [errors, setErrors] = useState({});
+  const [isCustomCategory, setIsCustomCategory] = useState(false);
 
   // Reset/populate form when modal opens or transaction changes
   useEffect(() => {
     if (transaction) {
+      const isCustom = transaction.category && !CATEGORIES.includes(transaction.category);
+      setIsCustomCategory(isCustom);
       setFormData({
         type: transaction.type,
         amount: transaction.amount,
@@ -38,6 +41,7 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
         date: new Date(transaction.date).toISOString().split('T')[0],
       });
     } else {
+      setIsCustomCategory(false);
       setFormData({
         type: 'expense',
         amount: '',
@@ -114,22 +118,20 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
             <button
               type="button"
               onClick={() => setFormData({ ...formData, type: 'expense' })}
-              className={`py-3 px-4 rounded-xl text-sm font-semibold tracking-wide border transition-all ${
-                formData.type === 'expense'
+              className={`py-3 px-4 rounded-xl text-sm font-semibold tracking-wide border transition-all ${formData.type === 'expense'
                   ? 'bg-red-50 border-red-500/30 text-red-600 font-bold'
                   : 'bg-slate-50 border-slate-100 text-slate-600 hover:bg-slate-100/50'
-              }`}
+                }`}
             >
               Expense
             </button>
             <button
               type="button"
               onClick={() => setFormData({ ...formData, type: 'income' })}
-              className={`py-3 px-4 rounded-xl text-sm font-semibold tracking-wide border transition-all ${
-                formData.type === 'income'
+              className={`py-3 px-4 rounded-xl text-sm font-semibold tracking-wide border transition-all ${formData.type === 'income'
                   ? 'bg-emerald-50 border-emerald-500/30 text-emerald-600 font-bold'
                   : 'bg-slate-50 border-slate-100 text-slate-600 hover:bg-slate-100/50'
-              }`}
+                }`}
             >
               Income
             </button>
@@ -148,9 +150,8 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
                 value={formData.amount}
                 onChange={handleChange}
                 placeholder="0.00"
-                className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${
-                  errors.amount ? 'border-red-350 focus:border-red-500' : ''
-                }`}
+                className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${errors.amount ? 'border-red-350 focus:border-red-500' : ''
+                  }`}
               />
               {errors.amount && (
                 <p className="mt-1 text-xs text-red-600 flex items-center gap-1.5">
@@ -171,9 +172,8 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${
-                    errors.date ? 'border-red-350 focus:border-red-500' : ''
-                  }`}
+                  className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${errors.date ? 'border-red-350 focus:border-red-500' : ''
+                    }`}
                 />
               </div>
               {errors.date && (
@@ -187,24 +187,46 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, transaction = null }) => 
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-semibold text-dark-300 uppercase tracking-wider mb-2">
-              Category
-            </label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${
-                errors.category ? 'border-red-350 focus:border-red-500' : ''
-              }`}
-            >
-              <option value="" disabled>Select Category</option>
-              {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat} className="bg-white text-slate-800">
-                  {cat}
+            <div className="flex justify-between items-center mb-2">
+              <label className="block text-xs font-semibold text-dark-300 uppercase tracking-wider">
+                Category
+              </label>
+              <button
+                type="button"
+                onClick={() => setIsCustomCategory(!isCustomCategory)}
+                className="text-xs text-brand-500 hover:text-brand-600 font-semibold transition-colors focus:outline-none cursor-pointer"
+              >
+                {isCustomCategory ? 'Choose from list' : 'Type custom'}
+              </button>
+            </div>
+            {isCustomCategory ? (
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                placeholder="Enter custom category"
+                className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${errors.category ? 'border-red-350 focus:border-red-500' : ''
+                  }`}
+              />
+            ) : (
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className={`w-full px-4 py-2.5 rounded-xl glass-input text-sm ${errors.category ? 'border-red-350 focus:border-red-500' : ''
+                  }`}
+              >
+                <option value="" disabled className="bg-dark-950 text-dark-100">
+                  Select Category
                 </option>
-              ))}
-            </select>
+                {CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat} className="bg-dark-950 text-dark-100">
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            )}
             {errors.category && (
               <p className="mt-1 text-xs text-red-600 flex items-center gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5 text-red-500" />
