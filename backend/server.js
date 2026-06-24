@@ -36,13 +36,18 @@ app.get('/', (req, res) => {
   });
 });
 
-// Route mountings
-app.use('/api/auth', authRoutes);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/budgets', budgetRoutes);
-app.use('/api/goals', goalRoutes);
-app.use('/api/health-score', healthRoutes);
-app.use('/api/reports', reportRoutes);
+// Route mountings helper to support both local development (/api/...) and Vercel prefix-stripped deployments (/...)
+const mountRoutes = (routerPath, routeHandler) => {
+  app.use(`/api/${routerPath}`, routeHandler);
+  app.use(`/${routerPath}`, routeHandler);
+};
+
+mountRoutes('auth', authRoutes);
+mountRoutes('transactions', transactionRoutes);
+mountRoutes('budgets', budgetRoutes);
+mountRoutes('goals', goalRoutes);
+mountRoutes('health-score', healthRoutes);
+mountRoutes('reports', reportRoutes);
 
 // Error handling middleware
 app.use(notFound);
